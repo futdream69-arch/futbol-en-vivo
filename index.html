@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="es">
 <head>
-
-<title>Fútbol en Vivo</title>
+<meta charset="UTF-8">
+<title>⚽ Fútbol en Vivo</title>
 
 <style>
 
 body{
 margin:0;
-color:white;
 font-family:Arial;
-text-align:center;
-background-image:url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2");
+background:url("https://images.unsplash.com/photo-1508098682722-e99c43a406b2") no-repeat center center fixed;
 background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-background-attachment:fixed;
+color:white;
+text-align:center;
 }
 
 body::before{
@@ -93,79 +89,22 @@ margin-top:30px;
 
 iframe{
 border-radius:10px;
+width:800px;
+height:450px;
 }
 
-.live{
-color:red;
-font-weight:bold;
+#fecha{
+margin-top:20px;
+font-size:18px;
+color:#00ff66;
 }
 
 </style>
-
-<script>
-
-function mostrarSeccion(id){
-
-document.getElementById("inicio").style.display="none"
-document.getElementById("partidos").style.display="none"
-document.getElementById("canales").style.display="none"
-
-document.getElementById(id).style.display="block"
-
-document.getElementById("playerContainer").style.display="none"
-document.getElementById("player").src=""
-
-}
-
-function mostrarCanales(partido){
-
-mostrarSeccion("canales")
-document.getElementById("tituloPartido").innerText = partido
-
-if(partido=="Borussia Mgladbach vs St Pauli"){
-
-document.getElementById("listaCanales").innerHTML = `
-
-<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuNQ==')">ESPN5</div>
-
-<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kaXNuZXk0')">Disney+</div>
-
-<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos?r=aHR0cHM6Ly9yb2phZGlyZWN0YXR2ZS5jb20vc3cuaHRtbD9nZXQ9aHR0cHM6Ly9yb2phZGlyZWN0YXR2ZS5jb20vcmVwcm8vZXNwbjUuaHRtbA==')">ESPN5 Móvil</div>
-
-`
-}
-
-if(partido=="Fatih Karagümrük vs Fenerbahçe"){
-
-document.getElementById("listaCanales").innerHTML = `
-
-<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kaXNuZXkx')">Disney+</div>
-
-<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMy')">Fox Sports 2</div>
-
-<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuM214')">ESPN3 MX</div>
-
-`
-}
-
-}
-
-function cambiarVideo(link){
-
-document.getElementById("player").src = link
-document.getElementById("playerContainer").style.display = "block"
-
-}
-
-</script>
-
 </head>
 
 <body>
 
-<header>
-⚽ Fútbol en Vivo
-</header>
+<header>⚽ Fútbol en Vivo</header>
 
 <button onclick="mostrarSeccion('inicio')">Inicio</button>
 <button onclick="mostrarSeccion('partidos')">Ver Partidos</button>
@@ -176,9 +115,9 @@ document.getElementById("playerContainer").style.display = "block"
 </div>
 
 <div id="partidos" class="seccion">
-
 <h2>Partidos de Hoy</h2>
-
+<div id="listaPartidos"></div>
+<p id="fecha"></p>
 </div>
 
 <div id="canales" class="seccion">
@@ -187,11 +126,8 @@ document.getElementById("playerContainer").style.display = "block"
 </div>
 
 <div id="playerContainer">
-
 <h2>Reproductor</h2>
-
-<iframe id="player" width="800" height="450" allowfullscreen></iframe>
-
+<iframe id="player" allowfullscreen></iframe>
 </div>
 
 <script type="module">
@@ -200,42 +136,106 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyCZx1nK4BAY8n14pdSTqA-liZHv5ML0Fjs",
-authDomain: "futbol-en-vivo-dba8c.firebaseapp.com",
-projectId: "futbol-en-vivo-dba8c",
-storageBucket: "futbol-en-vivo-dba8c.firebasestorage.app",
-messagingSenderId: "336791346623",
-appId: "1:336791346623:web:db37fbf99a30d7518e150a"
+apiKey: "AIzaSyBbldI5TD_wUfPencYBdspFMtaRm5dZ5eI",
+authDomain: "futbol-tv-3faa3.firebaseapp.com",
+projectId: "futbol-tv-3faa3",
+storageBucket: "futbol-tv-3faa3.firebasestorage.app",
+messagingSenderId: "73693804145",
+appId: "1:73693804145:web:2817c2adecb7d93812cdd0"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function cargarPartidos(){
+const listaPartidos = document.getElementById("listaPartidos");
+const listaCanales = document.getElementById("listaCanales");
+const reproductor = document.getElementById("playerContainer");
+const player = document.getElementById("player");
+const fecha = document.getElementById("fecha");
 
-const querySnapshot = await getDocs(collection(db,"partidos"));
+window.mostrarSeccion = function(id){
 
-let html="";
+document.querySelectorAll(".seccion").forEach(s=>s.style.display="none");
 
-querySnapshot.forEach((doc)=>{
+document.getElementById(id).style.display="block";
 
-const p = doc.data();
+reproductor.style.display="none";
+player.src="";
 
-html += `
-<div class="partido">
-${p.hora} - ${p.liga}
-<br>
-<strong>${p.equipos}</strong>
-</div>
-`;
-
-});
-
-document.getElementById("partidos").innerHTML += html;
+if(id==="partidos"){
+mostrarFecha();
+cargarPartidos();
+}
 
 }
 
-cargarPartidos();
+function mostrarFecha(){
+
+const hoy = new Date();
+
+fecha.textContent = hoy.toLocaleDateString("es-ES",{
+day:"numeric",
+month:"long",
+year:"numeric"
+});
+
+}
+
+function mostrarCanales(partido){
+
+mostrarSeccion("canales");
+
+document.getElementById("tituloPartido").innerText = partido.equipos;
+
+listaCanales.innerHTML="";
+
+if(!partido.canal || !partido.link){
+
+listaCanales.innerHTML="<p>No hay canales disponibles</p>";
+return;
+
+}
+
+const div = document.createElement("div");
+
+div.className="canal";
+div.textContent = partido.canal;
+
+div.onclick = ()=>{
+
+player.src = partido.link;
+
+reproductor.style.display="block";
+
+};
+
+listaCanales.appendChild(div);
+
+}
+
+async function cargarPartidos(){
+
+listaPartidos.innerHTML="";
+
+const snapshot = await getDocs(collection(db,"partidos"));
+
+snapshot.forEach(doc=>{
+
+const p = doc.data();
+
+const div = document.createElement("div");
+
+div.className="partido";
+
+div.innerHTML = `<strong>${p.equipos}</strong><br>${p.liga} - ${p.hora}`;
+
+div.onclick = ()=> mostrarCanales(p);
+
+listaPartidos.appendChild(div);
+
+});
+
+}
 
 </script>
 
