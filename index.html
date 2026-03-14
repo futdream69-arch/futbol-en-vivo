@@ -63,7 +63,41 @@ margin:10px auto;
 padding:15px;
 width:60%;
 border-radius:10px;
+cursor:pointer;
 border-left:5px solid #00ff66;
+}
+
+.partido:hover{
+background:#222;
+}
+
+.canal{
+display:block;
+background:#111;
+margin:10px auto;
+padding:10px;
+width:200px;
+border-radius:8px;
+cursor:pointer;
+border:1px solid #00ff66;
+}
+
+.canal:hover{
+background:#00aa44;
+}
+
+#playerContainer{
+display:none;
+margin-top:30px;
+}
+
+iframe{
+border-radius:10px;
+}
+
+.live{
+color:red;
+font-weight:bold;
 }
 
 </style>
@@ -74,8 +108,52 @@ function mostrarSeccion(id){
 
 document.getElementById("inicio").style.display="none"
 document.getElementById("partidos").style.display="none"
+document.getElementById("canales").style.display="none"
 
 document.getElementById(id).style.display="block"
+
+document.getElementById("playerContainer").style.display="none"
+document.getElementById("player").src=""
+
+}
+
+function mostrarCanales(partido){
+
+mostrarSeccion("canales")
+document.getElementById("tituloPartido").innerText = partido
+
+if(partido=="Borussia Mgladbach vs St Pauli"){
+
+document.getElementById("listaCanales").innerHTML = `
+
+<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuNQ==')">ESPN5</div>
+
+<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kaXNuZXk0')">Disney+</div>
+
+<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos?r=aHR0cHM6Ly9yb2phZGlyZWN0YXR2ZS5jb20vc3cuaHRtbD9nZXQ9aHR0cHM6Ly9yb2phZGlyZWN0YXR2ZS5jb20vcmVwcm8vZXNwbjUuaHRtbA==')">ESPN5 Móvil</div>
+
+`
+}
+
+if(partido=="Fatih Karagümrük vs Fenerbahçe"){
+
+document.getElementById("listaCanales").innerHTML = `
+
+<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kaXNuZXkx')">Disney+</div>
+
+<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMy')">Fox Sports 2</div>
+
+<div class="canal" onclick="cambiarVideo('https://tvhdlibre.com/embed/eventos.html?r=aHR0cHM6Ly9sYTE0aGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuM214')">ESPN3 MX</div>
+
+`
+}
+
+}
+
+function cambiarVideo(link){
+
+document.getElementById("player").src = link
+document.getElementById("playerContainer").style.display = "block"
 
 }
 
@@ -101,47 +179,59 @@ document.getElementById(id).style.display="block"
 
 <h2>Partidos de Hoy</h2>
 
-<div id="listaPartidos"></div>
+</div>
+
+<div id="canales" class="seccion">
+<h2 id="tituloPartido"></h2>
+<div id="listaCanales"></div>
+</div>
+
+<div id="playerContainer">
+
+<h2>Reproductor</h2>
+
+<iframe id="player" width="800" height="450" allowfullscreen></iframe>
 
 </div>
 
-<!-- FIREBASE -->
-
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCZx1nK4BAY8n14pdSTqA-liZHv5ML0Fjs",
-  authDomain: "futbol-en-vivo-dba8c.firebaseapp.com",
-  projectId: "futbol-en-vivo-dba8c",
-  storageBucket: "futbol-en-vivo-dba8c.firebasestorage.app",
-  messagingSenderId: "336791346623",
-  appId: "1:336791346623:web:db37fbf99a30d7518e150a"
+apiKey: "AIzaSyCZx1nK4BAY8n14pdSTqA-liZHv5ML0Fjs",
+authDomain: "futbol-en-vivo-dba8c.firebaseapp.com",
+projectId: "futbol-en-vivo-dba8c",
+storageBucket: "futbol-en-vivo-dba8c.firebasestorage.app",
+messagingSenderId: "336791346623",
+appId: "1:336791346623:web:db37fbf99a30d7518e150a"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function cargarPartidos() {
+async function cargarPartidos(){
 
- const querySnapshot = await getDocs(collection(db, "partidos"));
- const contenedor = document.getElementById("listaPartidos");
+const querySnapshot = await getDocs(collection(db,"partidos"));
 
- querySnapshot.forEach((doc) => {
+let html="";
 
-  const partido = doc.data();
+querySnapshot.forEach((doc)=>{
 
-  contenedor.innerHTML += `
-  <div class="partido">
-  ${partido.hora} - ${partido.liga}
-  <br>
-  <strong>${partido.equipos}</strong>
-  </div>
-  `;
+const p = doc.data();
 
- });
+html += `
+<div class="partido">
+${p.hora} - ${p.liga}
+<br>
+<strong>${p.equipos}</strong>
+</div>
+`;
+
+});
+
+document.getElementById("partidos").innerHTML += html;
 
 }
 
