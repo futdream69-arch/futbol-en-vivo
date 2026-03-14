@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Panel Admin</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+padding:40px;
+}
+
+input{
+padding:10px;
+margin:10px;
+width:250px;
+}
+
+button{
+padding:10px 20px;
+background:#00aa44;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Panel de Partidos</h1>
+
+<input id="equipos" placeholder="Equipos (Barcelona vs Real Madrid)">
+<br>
+
+<input id="hora" placeholder="Hora (16:00)">
+<br>
+
+<input id="liga" placeholder="Liga (LaLiga)">
+<br>
+
+<button onclick="guardar()">Agregar Partido</button>
+
+<p id="mensaje"></p>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyCZx1nK4BAY8n14pdSTqA-liZHv5ML0Fjs",
+authDomain: "futbol-en-vivo-dba8c.firebaseapp.com",
+projectId: "futbol-en-vivo-dba8c",
+storageBucket: "futbol-en-vivo-dba8c.firebasestorage.app",
+messagingSenderId: "336791346623",
+appId: "1:336791346623:web:db37fbf99a30d7518e150a"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.guardar = async function(){
+
+let equipos = document.getElementById("equipos").value
+let hora = document.getElementById("hora").value
+let liga = document.getElementById("liga").value
+
+await addDoc(collection(db,"partidos"),{
+equipos:equipos,
+hora:hora,
+liga:liga
+})
+
+document.getElementById("mensaje").innerText="Partido agregado ⚽"
+
+}
+
+</script>
+
+</body>
+</html>
