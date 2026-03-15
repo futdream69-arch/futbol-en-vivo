@@ -72,7 +72,7 @@ display:block;
 background:#111;
 margin:10px auto;
 padding:10px;
-width:200px;
+width:220px;
 border-radius:8px;
 cursor:pointer;
 border:1px solid #00ff66;
@@ -189,21 +189,24 @@ document.getElementById("tituloPartido").innerText = partido.equipos;
 
 listaCanales.innerHTML="";
 
-if(!partido.canal || !partido.link){
+if(!partido.canales || partido.canales.length===0){
 
 listaCanales.innerHTML="<p>No hay canales disponibles</p>";
 return;
 
 }
 
+partido.canales.forEach(c=>{
+
 const div = document.createElement("div");
 
 div.className="canal";
-div.textContent = partido.canal;
+
+div.textContent = c.nombre;
 
 div.onclick = ()=>{
 
-player.src = partido.link;
+player.src = c.link;
 
 reproductor.style.display="block";
 
@@ -211,13 +214,19 @@ reproductor.style.display="block";
 
 listaCanales.appendChild(div);
 
+});
+
 }
 
 async function cargarPartidos(){
 
-listaPartidos.innerHTML="";
+listaPartidos.innerHTML="Cargando partidos...";
+
+try{
 
 const snapshot = await getDocs(collection(db,"partidos"));
+
+listaPartidos.innerHTML="";
 
 snapshot.forEach(doc=>{
 
@@ -234,6 +243,14 @@ div.onclick = ()=> mostrarCanales(p);
 listaPartidos.appendChild(div);
 
 });
+
+}catch(error){
+
+console.error(error);
+
+listaPartidos.innerHTML="Error cargando partidos";
+
+}
 
 }
 
