@@ -2,10 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>⚽ soccer tv</title>
+<title>⚽ Fútbol en Vivo</title>
 
 <script src="https://pl28924956.effectivegatecpm.com/64/10/ab/6410ab7ff8740639d9a7f6e5bb2e52bc.js"></script>
-
 <script src="https://pl28924988.effectivegatecpm.com/77/b7/6a/77b76af70cf25029c69e421988657c45.js"></script>
 
 <style>
@@ -108,18 +107,21 @@ color:#00ff66;
 
 <body>
 
-<header>⚽ soccer tv</header>
+<header>⚽ Fútbol en Vivo</header>
+
+<!-- BOTÓN TRADUCTOR -->
+<div id="google_translate_element" style="margin-top:10px;"></div>
 
 <button onclick="mostrarSeccion('inicio')">Inicio</button>
 <button onclick="mostrarSeccion('partidos')">Ver Partidos</button>
 
 <div id="inicio" class="seccion" style="display:block">
 <h2>Bienvenido</h2>
-<p>Selecciona "See matches" para ver los juegos en vivo.</p>
+<p>Selecciona "Ver Partidos" para ver los juegos en vivo.</p>
 </div>
 
 <div id="partidos" class="seccion">
-<h2>today's matches</h2>
+<h2>Partidos de Hoy</h2>
 <div id="listaPartidos"></div>
 <p id="fecha"></p>
 </div>
@@ -210,7 +212,7 @@ div.textContent = c.nombre;
 
 div.onclick = ()=>{
 
-window.open("https://www.effectivegatecpm.com/e4exz7nkh?key=1b19457c1b6e0da314cedc67f3a9c729");
+window.open("https://www.effectivegatecpm.com/dziyynhgm?key=5630f9e798f187fc991e5b3069945cb6");
 
 player.src = c.link;
 
@@ -262,45 +264,18 @@ listaPartidos.innerHTML="Error cargando partidos";
 
 </script>
 
-<!-- SCRIPT 1 RECARGA ANUNCIOS -->
+<!-- TRADUCTOR GOOGLE -->
 
 <script>
-window.addEventListener("load", function(){
-
-var s1 = document.createElement("script");
-s1.src="https://pl28924956.effectivegatecpm.com/64/10/ab/6410ab7ff8740639d9a7f6e5bb2e52bc.js";
-document.body.appendChild(s1);
-
-var s2 = document.createElement("script");
-s2.src="https://pl28924988.effectivegatecpm.com/77/b7/6a/77b76af70cf25029c69e421988657c45.js";
-document.body.appendChild(s2);
-
-});
-</script>
-
-<!-- SCRIPT 2 ANUNCIO AL PRESIONAR VER PARTIDOS -->
-
-<script>
-document.addEventListener("DOMContentLoaded", function(){
-
-const botones = document.querySelectorAll("button");
-
-botones.forEach(btn => {
-
-if(btn.innerText.includes("Ver Partidos")){
-
-btn.addEventListener("click", function(){
-
-window.open("https://www.effectivegatecpm.com/e4exz7nkh?key=1b19457c1b6e0da314cedc67f3a9c729");
-
-});
-
+function googleTranslateElementInit() {
+new google.translate.TranslateElement(
+{pageLanguage: 'es'},
+'google_translate_element'
+);
 }
-
-});
-
-});
 </script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
