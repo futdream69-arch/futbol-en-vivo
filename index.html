@@ -262,5 +262,45 @@ listaPartidos.innerHTML="Error cargando partidos";
 
 </script>
 
+<!-- SCRIPT 1 RECARGA ANUNCIOS -->
+
+<script>
+window.addEventListener("load", function(){
+
+var s1 = document.createElement("script");
+s1.src="https://pl28924956.effectivegatecpm.com/64/10/ab/6410ab7ff8740639d9a7f6e5bb2e52bc.js";
+document.body.appendChild(s1);
+
+var s2 = document.createElement("script");
+s2.src="https://pl28924988.effectivegatecpm.com/77/b7/6a/77b76af70cf25029c69e421988657c45.js";
+document.body.appendChild(s2);
+
+});
+</script>
+
+<!-- SCRIPT 2 ANUNCIO AL PRESIONAR VER PARTIDOS -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+const botones = document.querySelectorAll("button");
+
+botones.forEach(btn => {
+
+if(btn.innerText.includes("Ver Partidos")){
+
+btn.addEventListener("click", function(){
+
+window.open("https://www.effectivegatecpm.com/e4exz7nkh?key=1b19457c1b6e0da314cedc67f3a9c729");
+
+});
+
+}
+
+});
+
+});
+</script>
+
 </body>
 </html>
